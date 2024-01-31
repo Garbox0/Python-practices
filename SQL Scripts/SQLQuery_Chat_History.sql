@@ -1,0 +1,23 @@
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'chats')
+	CREATE DATABASE "chats";
+GO
+
+USE chats;
+GO
+
+CREATE TABLE "Chat" (
+idChat INT IDENTITY(1,1) PRIMARY KEY
+);
+
+CREATE TABLE "Chat User" (
+idChatUser INT IDENTITY(1,1) PRIMARY KEY,
+handle VARCHAR(MAX) NOT NULL
+);
+
+CREATE TABLE "Chat Line" (
+idChatLine BIGINT IDENTITY(1,1) PRIMARY KEY,
+lineText VARCHAR(MAX) NOT NULL,
+CreatedChat DATETIME NOT NULL DEFAULT GETDATE(),
+idChat INT FOREIGN KEY REFERENCES "Chat"(idChat),
+idChatUser INT FOREIGN KEY REFERENCES "Chat User"(idChatUser)
+);
